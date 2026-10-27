@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - E-Learning Website</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: #172554;
+            color: white;
+            padding: 16px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav h2 {
+            color: #38bdf8;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(120deg, #172554, #2563eb);
+            color: white;
+            text-align: center;
+            padding: 75px 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            padding: 11px 20px;
+            border: none;
+            border-radius: 7px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+        }
+
+        /* Main Sections */
+        section {
+            padding: 50px 6%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            color: #172554;
+            margin-bottom: 25px;
+        }
+
+        /* Course Categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .category-btn {
+            padding: 10px 18px;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Course Cards */
+        .course-container {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px #00000012;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: appear 0.7s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 24px #00000020;
+        }
+
+        .thumbnail {
+            height: 175px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 55px;
+        }
+
+        .html-bg {
+            background: linear-gradient(135deg, #f97316, #c2410c);
+        }
+
+        .python-bg {
+            background: linear-gradient(135deg, #2563eb, #0f766e);
+        }
+
+        .design-bg {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+        }
+
+        .data-bg {
+            background: linear-gradient(135deg, #0891b2, #164e63);
+        }
+
+        .play-icon {
+            position: absolute;
+            bottom: 12px;
+            right: 15px;
+            background: #0009;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .course-content h3 {
+            margin-bottom: 10px;
+            color: #172554;
+        }
+
+        .instructor {
+            color: #64748b;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .objectives {
+            padding-left: 20px;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        /* Learning Progress */
+        .progress-section {
+            background: #eaf2ff;
+        }
+
+        .progress-card {
+            max-width: 650px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px auto;
+            box-shadow: 0 4px 14px #00000010;
+        }
+
+        .progress-track {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #16a34a;
+            transition: width 0.6s ease;
+        }
+
+        .progress-text {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        /* Instructor Section */
+        .instructor-container {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .instructor-card {
+            background: white;
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px #00000010;
+        }
+
+        .avatar {
+            width: 85px;
+            height: 85px;
+            background: #dbeafe;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 38px;
+        }
+
+        /* Footer */
+        footer {
+            background: #172554;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* Animation */
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            nav {
+                justify-content: center;
+            }
+
+            nav div {
+                text-align: center;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 5px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 35px 5%;
+            }
+
+            .course-footer {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <h2>📚 LearnHub</h2>
+        <div>
+            <a href="#home">Home</a>
+            <a href="#categories">Categories</a>
+            <a href="#courses">Courses</a>
+            <a href="#progress">My Learning</a>
+            <a href="#instructors">Instructors</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <h1>Learn New Skills Online</h1>
+        <p>Explore courses, learn from instructors, and achieve your goals.</p>
+        <a href="#courses" class="btn">Explore Courses</a>
+    </header>
+
+    <!-- Categories -->
+    <section id="categories">
+        <h2 class="section-title">Course Categories</h2>
+
+        <div class="categories">
+            <button class="category-btn active"
+                    data-category="All">All Courses</button>
+            <button class="category-btn"
+                    data-category="Web Development">Web Development</button>
+            <button class="category-btn"
+                    data-category="Programming">Programming</button>
+            <button class="category-btn"
+                    data-category="Design">Design</button>
+            <button class="category-btn"
+                    data-category="Data Science">Data Science</button>
+        </div>
+    </section>
+
+    <!-- Courses -->
+    <section id="courses">
+        <h2 class="section-title">Popular Courses</h2>
+
+        <div class="course-container">
+
+            <!-- Course 1 -->
+            <article class="course-card"
+                     data-category="Web Development">
+                <div class="thumbnail html-bg">
+                    🌐
+                    <span class="play-icon">▶️ Preview</span>
+                </div>
+
+                <div class="course-content">
+                    <span class="tag">Web Development</span>
+                    <h3>HTML & CSS for Beginners</h3>
+                    <p>Learn to create attractive and responsive websites.</p>
+                    <p class="instructor">👨‍🏫 Instructor: John Smith</p>
+
+                    <strong>Learning Objectives</strong>
+                    <ul class="objectives">
+                        <li>Understand HTML structure</li>
+                        <li>Design pages using CSS</li>
+                        <li>Create responsive layouts</li>
+                    </ul>
+
+                    <p>🎬 20 lessons | ⏱️ 5 hours</p>
+
+                    <div class="course-footer">
+                        <strong>Free</strong>
+                        <button class="btn enroll-btn"
+                                data-course="HTML & CSS for Beginners">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Course 2 -->
+            <article class="course-card"
+                     data-category="Programming">
+                <div class="thumbnail python-bg">
+                    🐍
+                    <span class="play-icon">▶️ Preview</span>
+                </div>
+
+                <div class="course-content">
+                    <span class="tag">Programming</span>
+                    <h3>Python Programming</h3>
+                    <p>Learn Python fundamentals and problem-solving.</p>
+                    <p class="instructor">👩‍🏫 Instructor: Sarah Johnson</p>
+
+                    <strong>Learning Objectives</strong>
+                    <ul class="objectives">
+                        <li>Learn Python syntax</li>
+                        <li>Use loops and functions</li>
+                        <li>Build simple programs</li>
+                    </ul>
+
+                    <p>🎬 25 lessons | ⏱️ 8 hours</p>
+
+                    <div class="course-footer">
+                        <strong>Free</strong>
+                        <button class="btn enroll-btn"
+                                data-course="Python Programming">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Course 3 -->
+            <article class="course-card"
+                     data-category="Design">
+                <div class="thumbnail design-bg">
+                    🎨
+                    <span class="play-icon">▶️ Preview</span>
+                </div>
+
+                <div class="course-content">
+                    <span class="tag">Design</span>
+                    <h3>UI/UX Design Basics</h3>
+                    <p>Discover how to design user-friendly interfaces.</p>
+                    <p class="instructor">👨‍🏫 Instructor: David Lee</p>
+
+                    <strong>Learning Objectives</strong>
+                    <ul class="objectives">
+                        <li>Understand design principles</li>
+                        <li>Create wireframes</li>
+                        <li>Improve user experience</li>
+                    </ul>
+
+                    <p>🎬 15 lessons | ⏱️ 4 hours</p>
+
+                    <div class="course-footer">
+                        <strong>Free</strong>
+                        <button class="btn enroll-btn"
+                                data-course="UI/UX Design Basics">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Course 4 -->
+            <article class="course-card"
+                     data-category="Data Science">
+                <div class="thumbnail data-bg">
+                    📊
+                    <span class="play-icon">▶️ Preview</span>
+                </div>
+
+                <div class="course-content">
+                    <span class="tag">Data Science</span>
+                    <h3>Data Science Fundamentals</h3>
+                    <p>Explore data analysis and basic statistics.</p>
+                    <p class="instructor">👩‍🏫 Instructor: Emily Brown</p>
+
+                    <strong>Learning Objectives</strong>
+                    <ul class="objectives">
+                        <li>Understand data analysis</li>
+                        <li>Learn basic statistics</li>
+                        <li>Interpret datasets</li>
+                    </ul>
+
+                    <p>🎬 18 lessons | ⏱️ 6 hours</p>
+
+                    <div class="course-footer">
+                        <strong>Free</strong>
+                        <button class="btn enroll-btn"
+                                data-course="Data Science Fundamentals">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="progress-section" id="progress">
+        <h2 class="section-title">My Learning Progress</h2>
+
+        <div class="progress-card">
+            <h3 id="progress-course">No course enrolled yet</h3>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text" id="progress-text">
+                Enroll in a course to start learning.
+            </p>
+
+            <button class="btn" id="lesson-btn" disabled>
+                Complete Next Lesson
+            </button>
+        </div>
+    </section>
+
+    <!-- Instructor Profiles -->
+    <section id="instructors">
+        <h2 class="section-title">Meet Our Instructors</h2>
+
+        <div class="instructor-container">
+            <div class="instructor-card">
+                <div class="avatar">👨‍💻</div>
+                <h3>John Smith</h3>
+                <p>Web Development Expert</p>
+                <p>5+ years of teaching experience.</p>
+            </div>
+
+            <div class="instructor-card">
+                <div class="avatar">👩‍💻</div>
+                <h3>Sarah Johnson</h3>
+                <p>Python Programmer</p>
+                <p>Specialist in beginner programming.</p>
+            </div>
+
+            <div class="instructor-card">
+                <div class="avatar">🎨</div>
+                <h3>David Lee</h3>
+                <p>UI/UX Designer</p>
+                <p>Passionate about creative design.</p>
+            </div>
+
+            <div class="instructor-card">
+                <div class="avatar">📈</div>
+                <h3>Emily Brown</h3>
+                <p>Data Science Instructor</p>
+                <p>Experienced in data analysis.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h3>📚 LearnHub</h3>
+        <p>Learn anytime, anywhere.</p>
+        <p>&copy; 2026 LearnHub. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Filter courses by category
+        const categoryButtons =
+            document.querySelectorAll(".category-btn");
+
+        const courseCards =
+            document.querySelectorAll(".course-card");
+
+        categoryButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                categoryButtons.forEach(btn =>
+                    btn.classList.remove("active")
+                );
+
+                button.classList.add("active");
+
+                const category = button.dataset.category;
+
+                courseCards.forEach(card => {
+                    if (category === "All" ||
+                        card.dataset.category === category) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+
+        // Course enrollment and progress
+        let selectedCourse = "";
+        let completedLessons = 0;
+        let totalLessons = 0;
+
+        const lessonCounts = {
+            "HTML & CSS for Beginners": 20,
+            "Python Programming": 25,
+            "UI/UX Design Basics": 15,
+            "Data Science Fundamentals": 18
+        };
+
+        const progressCourse =
+            document.getElementById("progress-course");
+
+        const progressFill =
+            document.getElementById("progress-fill");
+
+        const progressText =
+            document.getElementById("progress-text");
+
+        const lessonButton =
+            document.getElementById("lesson-btn");
+
+        document.querySelectorAll(".enroll-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                selectedCourse = button.dataset.course;
+                completedLessons = 0;
+                totalLessons = lessonCounts[selectedCourse];
+
+                progressCourse.textContent = selectedCourse;
+                lessonButton.disabled = false;
+
+                updateProgress();
+
+                alert("Successfully enrolled in " + selectedCourse + "!");
+                document.getElementById("progress")
+                    .scrollIntoView({ behavior: "smooth" });
+            });
+        });
+
+        // Update learning progress
+        function updateProgress() {
+            const percentage = Math.round(
+                completedLessons / totalLessons * 100
+            );
+
+            progressFill.style.width = percentage + "%";
+
+            progressText.textContent =
+                completedLessons + " of " + totalLessons +
+                " lessons completed (" + percentage + "%)";
+        }
+
+        // Simulate completion of a lesson
+        lessonButton.addEventListener("click", () => {
+            if (completedLessons < totalLessons) {
+                completedLessons++;
+                updateProgress();
+
+                if (completedLessons === totalLessons) {
+                    progressText.textContent =
+                        "Congratulations! You completed the course.";
+                    lessonButton.disabled = true;
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
